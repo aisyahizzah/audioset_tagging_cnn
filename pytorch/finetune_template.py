@@ -66,7 +66,7 @@ class Transfer_Cnn14_DecisionLevelMax(nn.Module):
         fmax, classes_num, freeze_base):
         """Classifier for a new task using pretrained Cnn14 as a sub module.
         """
-        super(Transfer_Cnn14, self).__init__()
+        super(Transfer_Cnn14_DecisionLevelMax, self).__init__()
         audioset_classes_num = 527
         
         self.base = Cnn14_DecisionLevelMax(sample_rate, window_size, hop_size, mel_bins, fmin, 
