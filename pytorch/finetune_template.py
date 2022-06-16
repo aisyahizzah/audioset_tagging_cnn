@@ -80,7 +80,7 @@ class Transfer_Cnn14_DecisionLevelMax(nn.Module):
         #     for param in self.base.parameters():
         #         param.requires_grad = False
 
-        self.init_weights()
+        # self.init_weights()
 
     def init_weights(self):
         init_layer(self.fc_transfer)
