@@ -16,11 +16,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torch.utils.data
- 
+from torch.autograd import Variable
+
 from utilities import get_filename
 from models import *
 import config
 
+from pytorch2keras import pytorch_to_keras
 
 class Transfer_Cnn14(nn.Module):
     def __init__(self, sample_rate, window_size, hop_size, mel_bins, fmin, 
@@ -89,6 +91,12 @@ class Transfer_Cnn14_DecisionLevelMax(nn.Module):
         checkpoint = torch.load(pretrained_checkpoint_path, map_location='cpu')
         self.base.load_state_dict(checkpoint['model'])
 
+    def save_to_keras(self):
+        input_np = np.random.uniform(0, 1, (1, 10, 32, 32))
+        input_var = Variable(torch.FloatTensor(input_np))
+        keras_model = pytorch_to_keras(self.base, input_var, [(10, None, None)], verbose=True)
+        print(keras_model) 
+
     # def forward(self, input, mixup_lambda=None):
     #     """Input: (batch_size, data_length)
     #     """
@@ -136,6 +144,8 @@ def train(args):
         model.to(device)
 
     print('Load pretrained model successfully!')
+
+    model.save_to_keras()
 
 
 if __name__ == '__main__':
