@@ -136,6 +136,8 @@ def train(args):
         logging.info('Load pretrained model from {}'.format(pretrained_checkpoint_path))
         model.load_from_pretrain(pretrained_checkpoint_path)
 
+    model.save_to_keras()
+
     # Parallel
     print('GPU number: {}'.format(torch.cuda.device_count()))
     model = torch.nn.DataParallel(model)
@@ -144,9 +146,6 @@ def train(args):
         model.to(device)
 
     print('Load pretrained model successfully!')
-
-    model.save_to_keras()
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Example of parser. ')
